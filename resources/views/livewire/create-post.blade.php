@@ -11,13 +11,13 @@
         <x-slot name="content">
             <div class="mb-4">
                 <x-label value="Título del post" />
-                <x-input type="text" class="w-full" wire:model="title" />
-                {{ $title }}
+                <x-input type="text" class="w-full" wire:model.blur="title" />
+                <x-input-error for="title" />
             </div>
             <div class="mb-4">
                 <x-label value="Contenido del post" />
-                <textarea class="form-control w-full" wire:model="content" rows="6"></textarea>
-                {{ $content }}
+                <textarea class="form-control w-full" wire:model.blur="content" rows="6"></textarea>
+                <x-input-error for="content" />
             </div>
         </x-slot>
 

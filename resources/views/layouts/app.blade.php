@@ -11,10 +11,10 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-
+    <link rel="stylesheet" href="{{ asset('vendor/fontawesome-free/css/all.min.css') }}">
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Styles -->
     @livewireStyles
 </head>
@@ -43,7 +43,17 @@
     @stack('modals')
 
     @livewireScripts
-    <script src="https://kit.fontawesome.com/c8cb53f399.js" crossorigin="anonymous"></script>
+
+    <script>
+        Livewire.on('alert', (message) => {
+            Swal.fire({
+                title: "Good job!",
+                text: message,
+                icon: "success"
+            });
+        });
+    </script>
+
 </body>
 
 </html>
