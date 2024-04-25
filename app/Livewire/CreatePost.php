@@ -4,34 +4,49 @@ namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\Post;
+use Livewire\WithFileUploads;
 
 class CreatePost extends Component
 {
-    public $isOpen = false;
+    use WithFileUploads;
 
-    public $title, $content;
+    public $isOpen = true;
+
+    public $title, $content, $image, $identificador;
+
+
 
     protected $rules = [
-        'title' => 'required|max:10',
-        'content' => 'required|min:3'
+        'title' => 'required|min:4',
+        'content' => 'required|min:3',
+        'image' => 'required|max:2048'
     ];
 
+    // public function updated($prop)
+    // {
+    //     $this->validateOnly($prop);
+    // }
 
-    public function updated($prop)
+    public function mount()
     {
-        $this->validateOnly($prop);
+        $this->identificador = rand();
     }
-
 
     public function save()
     {
         $this->validate();
+
+        $image = $this->image->store('post');
+
         Post::create([
             'title' => $this->title,
-            'content' => $this->content
+            'content' => $this->content,
+            'image' => $image
         ]);
 
-        $this->reset(['isOpen', 'title', 'content']);
+        $this->reset(['isOpen', 'title', 'content', 'image']);
+
+        $this->identificador = rand();
 
         $this->dispatch('render')->to(ShowPosts::class);
         $this->dispatch('alert', 'El post ha sido creado satisfactoriamente');
